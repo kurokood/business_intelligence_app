@@ -45,14 +45,25 @@ output "api_gateway_url" {
   value       = "https://${aws_api_gateway_rest_api.lambda_api.id}.execute-api.${var.aws_region}.amazonaws.com/${aws_api_gateway_stage.prod.stage_name}/generate"
 }
 
+output "quicksight_console_url" {
+  description = "URL to access QuickSight console for dashboard creation (if enabled)"
+  value       = var.quicksight_user != "" ? module.quicksight[0].quicksight_console_url : "QuickSight not enabled - set quicksight_user variable"
+}
+
+output "quicksight_setup_instructions" {
+  description = "Instructions for setting up QuickSight dashboards (if enabled)"
+  value       = var.quicksight_user != "" ? module.quicksight[0].setup_instructions : "QuickSight not enabled"
+}
+
 output "architecture_summary" {
   description = "Summary of the serverless architecture"
   value = {
-    compute_model    = "Serverless (Lambda)"
-    scheduling       = "EventBridge (every 5 minutes)"
-    network_required = "None"
-    cost_model       = "Pay-per-execution"
-    maintenance      = "Zero"
-    modules_count    = "4 (vs 7 with EC2)"
+    compute_model     = "Serverless (Lambda)"
+    scheduling        = "EventBridge (every 5 minutes)"
+    network_required  = "None"
+    cost_model        = "Pay-per-execution"
+    maintenance       = "Zero"
+    modules_count     = var.quicksight_user != "" ? "6 modules (with QuickSight)" : "5 modules"
+    visualization     = var.quicksight_user != "" ? "QuickSight + Athena" : "Athena SQL"
   }
 }

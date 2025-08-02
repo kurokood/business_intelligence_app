@@ -10,6 +10,7 @@ This serverless solution automatically generates, processes, and analyzes clicks
 - **EventBridge**: Schedules automatic data generation
 - **S3**: Stores raw data, processed results, and job scripts
 - **Glue**: ETL processing with database and table management
+- **QuickSight**: Interactive dashboards and visualizations for business users
 - **IAM**: Secure role-based access control
 - **SSM**: Configuration parameter management
 - **API Gateway**: Manual trigger endpoint (optional)
@@ -32,7 +33,8 @@ business_intelligence_app/
     ├── s3/                    # S3 bucket with security
     ├── iam/                   # IAM roles and policies
     ├── ssm/                   # Parameter store
-    └── glue/                  # Database, table, and ETL job
+    ├── glue/                  # Database, table, and ETL job
+    └── quicksight/            # Business intelligence dashboards
 ```
 
 ## 🚀 Quick Start
@@ -79,7 +81,8 @@ aws glue start-job-run --job-name $(terraform output -raw glue_job_name)
 ```
 
 ### 3. **Data Analysis**
-- Set Athena query result location: `s3://your-bucket/athena-results/`
+- **Technical Users**: Set Athena query result location: `s3://your-bucket/athena-results/`
+- **Business Users**: Access pre-built QuickSight dashboards for interactive analytics
 - Query processed data: `SELECT * FROM clickstream_db.clickstream_table`
 
 ## 🔧 Configuration
@@ -93,19 +96,35 @@ aws glue start-job-run --job-name $(terraform output -raw glue_job_name)
 ### Customization
 Override defaults using Terraform variables:
 ```bash
+# Basic customization
 terraform apply -var="lambda_schedule=rate(10 minutes)" -var="events_per_execution=50"
+
+# Enable QuickSight dashboards (requires QuickSight setup)
+terraform apply -var="quicksight_user=your-quicksight-username"
 ```
+
+### QuickSight Setup (Optional)
+To enable business intelligence dashboards:
+
+1. **Enable QuickSight** in your AWS account
+2. **Deploy with QuickSight module**: `terraform apply -var="quicksight_user=username"`
+3. **Follow setup instructions** from Terraform output
+4. **Create dashboards** manually in QuickSight console using provided data sources
+
+**Note**: QuickSight dashboards require manual setup through the AWS console for optimal visualization configuration.
 
 ## 📈 Data Flow
 
 ```
-Lambda (every 5 min) → S3 /raw/ → Glue ETL → S3 /results/ → Athena Analytics
-                                      ↓
-                                 S3 /processed/ (archived)
+Lambda (every 5 min) → S3 /raw/ → Glue ETL → S3 /results/ → Athena/QuickSight
+                                      ↓                           ↓
+                                 S3 /processed/              Business Dashboards
+                                  (archived)
 ```
 
-## 🔍 Sample Analytics Queries
+## 🔍 Analytics Options
 
+### **For Technical Users (Athena SQL)**
 ```sql
 -- Event distribution by country
 SELECT 
@@ -126,6 +145,13 @@ WHERE product_category IS NOT NULL
 GROUP BY event_type, product_category
 ORDER BY count DESC;
 ```
+
+### **For Business Users (QuickSight Dashboards)**
+- **Executive Summary**: High-level KPIs and trends
+- **Geographic Analysis**: Interactive world map with click-through rates
+- **User Behavior**: Funnel analysis and user journey visualization
+- **Product Performance**: Category-wise engagement and conversion metrics
+- **Real-time Monitoring**: Live dashboards with automatic refresh
 
 ## 💰 Cost Optimization
 

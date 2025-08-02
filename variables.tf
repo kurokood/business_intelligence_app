@@ -29,3 +29,9 @@ variable "events_per_execution" {
   type        = number
   default     = 20
 }
+
+variable "quicksight_user" {
+  description = "QuickSight user name for dashboard permissions (optional)"
+  type        = string
+  default     = ""
+}

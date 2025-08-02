@@ -87,6 +87,17 @@ module "lambda" {
   common_tags          = local.common_tags
 }
 
+# QuickSight Module (optional - requires QuickSight user)
+module "quicksight" {
+  count  = var.quicksight_user != "" ? 1 : 0
+  source = "./modules/quicksight"
+
+  quicksight_user    = var.quicksight_user
+  glue_database_name = module.glue.database_name
+  glue_table_name    = module.glue.table_name
+  common_tags        = local.common_tags
+}
+
 # Optional: API Gateway for manual triggering (bonus feature)
 resource "aws_api_gateway_rest_api" "lambda_api" {
   name        = "${local.project_name}-api"
