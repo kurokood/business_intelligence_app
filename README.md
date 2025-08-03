@@ -248,3 +248,10 @@ aws glue get-job-runs --job-name $(terraform output -raw glue_job_name) --max-it
 ✅ **Maintainable**: Infrastructure as Code  
 
 This solution provides a production-ready, cost-effective platform for clickstream analytics and business intelligence.
+
+---
+
+###  Author: Mon Villarin
+ 📌 LinkedIn: [Ramon Villarin](https://www.linkedin.com/in/ramon-villarin/)  
+ 📌 Portfolio Site: [MonVillarin.com](https://monvillarin.com)  
+ 📌 Blog Post: [Building a Serverless Business Intelligence Pipeline: From Clickstream to Insights](Building a Serverless Business Intelligence Pipeline: From Clickstream to Insights)
