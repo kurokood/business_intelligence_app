@@ -254,4 +254,4 @@ This solution provides a production-ready, cost-effective platform for clickstre
 ###  Author: Mon Villarin
  📌 LinkedIn: [Ramon Villarin](https://www.linkedin.com/in/ramon-villarin/)  
  📌 Portfolio Site: [MonVillarin.com](https://monvillarin.com)  
- 📌 Blog Post: [Building a Serverless Business Intelligence Pipeline: From Clickstream to Insights](https://blog.monvillarin.com/building-a-serverless-business-intelligence-pipeline-from-clickstream-to-insights)
+ 📌 Blog Post: [A Business Intelligence Pipeline That Transforms Clickstream Into Insights](https://blog.monvillarin.com/a-business-intelligence-pipeline-that-transforms-clickstream-into-insights)
